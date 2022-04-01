@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                      https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0"
+         metadata-complete="true">
+  <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>hello</servlet-name>
+    <servlet-class>com.fenlon.servlet.HelloServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>hello</servlet-name>
+    <url-pattern>/h</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>getc</servlet-name>
+    <servlet-class>com.fenlon.servlet.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getc</servlet-name>
+    <url-pattern>/getc</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Image</servlet-name>
+    <servlet-class>com.fenlon.servlet.Image</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Image</servlet-name>
+    <url-pattern>/img</url-pattern>
+  </servlet-mapping>
+
+  <!-- 配置session -->
+  <session-config>
+    <!-- 15分钟失效 -->
+    <session-timeout>15</session-timeout>
+  </session-config>
+</web-app>

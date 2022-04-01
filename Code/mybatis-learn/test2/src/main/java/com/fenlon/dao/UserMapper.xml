@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fenlon.dao.UserMapper">
+    <select id="getUser" resultType="UserData">
+        select * from mybatis.user
+    </select>
+
+    <resultMap id="userMap" type="userData">
+        <result column="pwd" property="password"/>
+    </resultMap>
+
+    <select id="getUserById" parameterType="int" resultMap="userMap">
+        select id, name, password as pwd from mybatis.user where id = #{id};
+    </select>
+
+    <insert id="addUser" parameterType="userData">
+        insert into mybatis.user (name, password) values (#{name}, #{password})
+    </insert>
+
+    <update id="updateUser" parameterType="UserData">
+        update mybatis.user set name = #{name}, password = #{password} where id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.user where id = #{id}
+    </delete>
+
+    <select id="getUserByLimit" parameterType="map" resultType="UserData">
+        select * from mybatis.user limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="getUserByRowBounds" resultType="UserData">
+        select * from mybatis.user
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--引入外部文件配置, 外部属性设置优先-->
+    <properties resource="db.properties">
+        <!--增加属性配置-->
+        <property name="password" value="111111"/>
+    </properties>
+
+    <settings>
+        <!--配置mybatis日志 标准日志-->
+        <!--<setting name="logImpl" value="STDOUT_LOGGING"/>-->
+        <setting name="logImpl" value="LOG4J"/>
+        <!--启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!--设置类别名-->
+    <typeAliases>
+        <!--<typeAlias type="com.fenlon.pojo.UserData" alias="UserData"/>-->
+        <package name="com.fenlon.pojo"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--每一个mapper.xml都需要在配置文件中注册-->
+    <mappers>
+        <!--<mapper resource="com/fenlon/dao/UserMapper.xml"/>-->
+        <!--<mapper class="com.fenlon.dao.UserMapper"/>-->
+        <package name="com.fenlon.dao"/>
+    </mappers>
+</configuration>

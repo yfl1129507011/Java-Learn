@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fenlon.dao.UserDao">
+    <select id="getUser" resultType="com.fenlon.pojo.UserData">
+        select * from mybatis.user
+    </select>
+
+    <select id="getUserById" parameterType="int" resultType="com.fenlon.pojo.UserData">
+        select * from mybatis.user where id = #{id};
+    </select>
+
+    <insert id="addUser" parameterType="com.fenlon.pojo.UserData">
+        insert into mybatis.user (name, password) values (#{name}, #{password})
+    </insert>
+
+    <update id="updateUser" parameterType="com.fenlon.pojo.UserData">
+        update mybatis.user set name = #{name}, password = #{password} where id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.user where id = #{id}
+    </delete>
+
+    <insert id="addUserByMap" parameterType="map">
+        insert into mybatis.user (name, password) values (#{name1}, #{psd1})
+    </insert>
+
+    <select id="getListByLike" resultType="com.fenlon.pojo.UserData">
+        select * from mybatis.user where name like "%"#{value}"%"
+    </select>
+</mapper>
