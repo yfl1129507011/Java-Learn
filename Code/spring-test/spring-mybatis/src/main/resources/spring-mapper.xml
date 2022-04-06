@@ -2,10 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/aop
-            http://www.springframework.org/schema/aop/spring-aop.xsd">
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--使用spring的数据源替换mybatis的配置-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -29,4 +32,28 @@
     <bean id="userMapper" class="com.fenlon.mapper.UserMapperImpl">
         <property name="sqlSession" ref="sqlSession"/>
     </bean>
+
+    <!--配置声明事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--结合AOP实现事务的植入-->
+    <!--配置事务的类：-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!--给指定方法配置事务-->
+        <tx:attributes>
+            <tx:method name="add" propagation="REQUIRED"/>
+            <tx:method name="delete"/>
+            <tx:method name="query" read-only="true"/>
+            <tx:method name="update"/>
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!--配置事务切入（AOP）-->
+    <aop:config>
+        <aop:pointcut id="txPointCut" expression="execution(* com.fenlon.mapper.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
+    </aop:config>
 </beans>
